@@ -1,0 +1,63 @@
+#---------------------------------------------函式
+def flat(nums):
+    res = []
+    for i in nums:
+        if isinstance(i, list):
+            res.extend(flat(i))
+        else:
+            res.append(i)
+    return res
+#---------------------------------------------把input的內容分類到list內[[a][b]]
+class1 = []
+for i in range(5):
+    class2 = input()
+    class2 = class2.split()
+    class1.append(class2)
+#---------------------------------------------宣告
+list1 = []
+list2 = []
+list3 = []
+list4 = []
+num = 0
+#---------------------------------------------(比對e d大小) 如果input的第三筆資料超過2個值 and e<d 反轉最後的list
+if (len(class1[2]) >= 2) and (class1[1][1]) < (class1[2][1]):
+    num += 5
+else:
+    pass
+#---------------------------------------------將感興趣的科目放到list內
+list3 = list1.extend([class1[0][0]])
+#---------------------------------------------如果input只有一個 直接丟到list裡面 else把同等級的科目拉出來比對排序並丟到list
+if len(class1[0]) <= 1:
+    list1.extend(class1[0])
+else:
+    del class1[0][0]
+    class1[0].sort(reverse=True)
+    list1.extend([class1[0]])
+#---------------------------------------------[[a][b]]這種資料型態太難整理 所以把他攤開
+list2 = flat(list1)
+list2 = list(dict.fromkeys(list2))
+#---------------------------------------------如果input只有一個 直接丟到list裡面 else把同等級的科目拉出來比對排序並丟到list
+if len(class1[1]) <= 1:
+    list2.extend(class1[1])
+else:
+    del class1[1][0]
+    class1[1].sort(reverse=True)
+    list2.extend([class1[1]])
+#---------------------------------------------如果input只有一個 直接丟到list裡面 else把同等級的科目拉出來比對排序並丟到list
+if len(class1[2]) <= 1:
+    list2.extend(class1[2])
+else:
+    del class1[2][0]
+    class1[2].sort(reverse=True)
+    list2.extend([class1[2]])
+#---------------------------------------------[[a][b]]這種資料型態太難整理 所以把他攤開 且因為output是反過來的 所以反轉list
+list2 = flat(list2)
+list2 = list(dict.fromkeys(list2))
+list4 = list(reversed(list2))
+#---------------------------------------------前面+5反轉的延續
+if num == 5:
+    list4[0],list4[1] = list4[1],list4[0]
+else:
+    pass
+#---------------------------------------------依序從list裡面把值拿出來輸出
+print(" ".join(list4))
