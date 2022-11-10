@@ -1,0 +1,106 @@
+list1 = []
+#---------------------------------------------input,將資料丟進list
+for i in range(5):
+    list2 = input()
+    list2 = list2.split()
+    list1.append(list2)
+#---------------------------------------------判斷自己的座標
+coor1 = list1[0][0]
+coor1 = coor1.split(",")
+x = int(coor1[0])
+y = int(coor1[1])
+#---------------------------------------------宣告
+xlist = []
+ylist = []
+totolist1 = []
+totolist2 = []
+rangelist = []
+anslist = []
+ewsn = ["East","West","South","North"]
+num = 1
+num1 = 0
+num2 = 1
+num4 = 0
+num5 = 0
+num6 = 1
+num7 = 1
+num8 = 0
+num9 = 0
+num10 = 0
+num11 = 0
+num12 = 0
+num13 = 0
+num14 = 0
+#---------------------------------------------提取東南西北座標,並使用歐及里得距離算出社交距離
+for c in range(4):
+    listx = list1[num2][0][3:-1]
+    totolist1.append(listx)
+    num2 += 1
+
+for l in range(4):
+    totolist2 += totolist1[num4].split(",")
+    num4 += 1
+
+for j in range(4):
+    rangelist.append((int(totolist2[num5]) - x)**2 + (int(totolist2[num6]) - y)**2)
+    num5 += 2
+    num6 += 2
+#---------------------------------------------判斷全部距離>10000==safe
+if (int(rangelist[0]) > 10000) and (int(rangelist[1]) > 10000) and (int(rangelist[2]) > 10000) and (int(rangelist[3]) > 10000):
+    print("Safe")
+    num11 += 1
+#---------------------------------------------判斷全部距離<10000 
+elif (int(rangelist[0]) < 10000) and (int(rangelist[1]) < 10000) and (int(rangelist[2]) < 10000) and (int(rangelist[3]) < 10000):
+    for x in range(4):
+#---------------------------------------------判斷國內+沒接觸感染者 如果累計4次就====safe
+        if (list1[num7][0][0] == "T") and (list1[num7][0][1] == "W") and (list1[num7][0][2] == "N") and (list1[num7][0][-1] == "F"):
+            #print("Safe")
+            num8 += 1
+#---------------------------------------------只要不是國內或有接觸感染者就+1 如果累計4次就==Virus in your area
+        elif ((list1[num7][0][0] != "T") or (list1[num7][0][1] != "W") or (list1[num7][0][2] != "N") or (list1[num7][0][-1] == "T")):
+            #print("Virus in your area")
+            num9 +=1
+        else:
+            pass
+        num7 +=1
+else:
+    pass
+#---------------------------------------------延續上面的safe和Virus in your area
+if num8 == 4:
+    print("Safe")
+    num11 += 1
+elif num9 == 4:
+    print("Virus in your area")
+    num11 += 1
+#---------------------------------------------如果距離>10000 pass
+else:
+    for x in range(4):
+        if (int(rangelist[num1]) > 10000):
+            pass
+#---------------------------------------------國內+沒接觸感染者==safe
+        elif (list1[num][0][0] == "T") and (list1[num][0][1] == "W") and (list1[num][0][2] == "N") and (list1[num][0][-1] == "F"):
+            #print("Safe")
+            num14 +=1
+            num11 += 1
+#---------------------------------------------把危險位置放入一個list(因為要先輸出alarm)
+        else:
+            anslist.append(ewsn[num10])
+            #print(anslist)
+            #print(ewsn[num10])
+            num12 += 1
+        num += 1
+        num1 +=1
+        num10 += 1
+#---------------------------------------------如果上面有人確診 並小於4則輸出alarm
+if (num11 == 0) or (num12 >=1):
+    print("Alarm")
+    #print(num11,num12)
+#---------------------------------------------輸出確診方向
+    for r in range(len(anslist)):
+        print(anslist[num13])
+        num13 += 1
+#---------------------------------------------把上面還沒判斷的safe加進來
+elif num14 !=0:
+        print("Safe")
+else:
+    pass
